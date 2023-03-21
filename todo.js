@@ -121,18 +121,27 @@ function ShowList(){
         taskDivDown.appendChild(editButton);
 
         //Funkcjonalność przycisku EDYTUJ
-        editButton.addEventListener('click', e =>{
-            taskDivInput.removeAttribute("readonly");
-            taskDivInput.focus();
-            editButton.style.color = "blue";
-
-            editButton.addEventListener('blur', () => {
-                taskDivInput.setAttribute("readonly", "true");
-                todo.content = taskDivInput.value;
-                localStorage.setItem('key', JSON.stringify(todoLocalStorage));
-                ShowList();
-            })
+        editButton.addEventListener('click', () =>{
+            if(taskDivInput.hasAttribute("readonly", "true")){
+                taskDivInput.removeAttribute("readonly");
+                taskDivInput.focus();
+                editButton.style.color = "blue";
+            }
+            else{
+                if(taskDivInput.value == "" || taskDivInput.value.trim().length === 0){
+                    alert("Empty task");
+                    taskDivInput.focus();
+                }
+                else{
+                    taskDivInput.setAttribute("readonly", "true");
+                    todo.content = taskDivInput.value;
+                    localStorage.setItem('key', JSON.stringify(todoLocalStorage));
+                    ShowList();
+                }
+            }
             
+
+             
             
         })
 
